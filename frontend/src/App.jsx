@@ -1,15 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
+import Dashboard from './pages/Dashboard'
+import Abouts from './pages/About'
+import SignIn from './pages/SignIn'
+import SignUp from './pages/Signup'
+import Projects from './pages/Projects'
 
-
-export default function App() {
+const App = () => {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <BrowserRouter >
+      <Routes>
+        <Route path='/' element={<Home />} /> {/*Route is self closing*/}
+        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/about' element={<Abouts />} />
+        <Route path='/sign-in' element={<SignIn />} />
+        <Route path='/sign-up' element={<SignUp />} />
+        <Route path='/projects' element={<Projects />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
-
+export default App
