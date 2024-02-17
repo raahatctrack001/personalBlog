@@ -6,10 +6,13 @@ import Abouts from './pages/About'
 import SignIn from './pages/SignIn'
 import SignUp from './pages/Signup'
 import Projects from './pages/Projects'
+import Headers from './components/Headers'
+import Footer from './components/Footer'
 
 const App = () => {
   return (
     <BrowserRouter >
+      <Headers />
       <Routes>
         <Route path='/' element={<Home />} /> {/*Route is self closing*/}
         <Route path='/dashboard' element={<Dashboard />} />
@@ -18,6 +21,7 @@ const App = () => {
         <Route path='/sign-up' element={<SignUp />} />
         <Route path='/projects' element={<Projects />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }
