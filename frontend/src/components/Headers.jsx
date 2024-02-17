@@ -31,12 +31,14 @@ const Headers = () => {
         </Button> 
       <div className='flex gap-2 md:order-2'>     
         <Button
+          className='hidden sm:inline'
           pill
           color='gray'>
           <MdDarkMode />
         </Button>
         <Link to='/sign-in'>
-          <Button          
+          <Button  
+            outline        
             pill
             gradientDuoTone='purpleToBlue'
             className=''
