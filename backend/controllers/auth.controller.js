@@ -3,7 +3,6 @@ import bcryptjs from 'bcryptjs';
 import { errorHandler } from "../utils/error.js";
 
 
-
 const signup = async (req, res, next)=>{
     const {username, email, password} = req.body;
     //handling edge cases
