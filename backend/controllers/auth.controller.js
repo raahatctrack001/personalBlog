@@ -1,12 +1,14 @@
 import User from "../models/user.model.js";
 import bcryptjs from 'bcryptjs';
-const signup = async (req, res)=>{
+import { errorHandler } from "../utils/error.js";
+
+
+
+const signup = async (req, res, next)=>{
     const {username, email, password} = req.body;
     //handling edge cases
     if(!username || !email || !password || username === '' || email === '' || password === ''){
-        return res.status(400).json({
-            message: "All fields are required"
-        });
+        return  next(errorHandler(400, 'All fields are necessary'));
     }
     
     const saltRound = 10;
@@ -22,11 +24,8 @@ const signup = async (req, res)=>{
         res.json("signup successfull");
     }
     catch(error){
-        res.status(500).json({
-            message: error.message
-        });
+        next(error);
     }
-
 };
 
 export default signup;

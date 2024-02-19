@@ -24,6 +24,17 @@ mongoose
 app.use('/backend/user', userRoutes);
 app.use('/backend/auth', authRoutes);
 
+//middleware
+app.use((err, req, res, next) => {
+    const statusCode = err.statuscode || 500;
+    const message = err.message || 'Internal Server Error';
+    res.status(statusCode).json({
+        success: false,
+        statusCode,
+        message,
+    });
+});
+
 
 app.listen(port, ()=>{
     console.log(`server is up and running on port ${port}`);
