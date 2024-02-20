@@ -1,10 +1,15 @@
 import { Alert, Label, TextInput, Button, Spinner } from 'flowbite-react';
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { signInFailure, signInStart, signInSuccess } from '../redux/user/userSlice';
+
 const SignIn = () => {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState(null);
+  const {loading, error: errorMessage} = useSelector(state=>state.user);
   const navigate = useNavigate();
   const handleChange = (event)=>{
     setFormData({
@@ -18,11 +23,16 @@ const SignIn = () => {
   }
 
   const handleSubmit = async (event) =>{
-    setLoading(true);
-    setErrorMessage(null);
+    // setLoading(true);
+    // setErrorMessage(null);    
     event.preventDefault();
+    if(!formData.email || !formData.password){
+      // return setErrorMessage('All fields are required');
+      return dispatch(signInFailure('You can not clap from one hand'));
+    }
     //api integration
     try{
+      dispatch(signInStart());
       const res = await fetch('/backend/auth/signin', {
         method: 'POST',
         headers : {
@@ -32,14 +42,19 @@ const SignIn = () => {
       });
       const data = await res.json();
       if(data.success === false){
-        setLoading(false);
-        return setErrorMessage(data.message);
+        // setLoading(false);
+        // return setErrorMessage(data.message);
+        dispatch(signInFailure(data.message));
       }
-      navigate('/');
+      if(res.ok){
+        dispatch(signInSuccess(data));
+        navigate('/');
+      }
     }
     catch(error){
-      setLoading(false);
-      setErrorMessage(error.message);
+      dispatch(signInFailure(error.message));
+      // setLoading(false);
+      // setErrorMessage(error.message);
     }
   }
   return (
