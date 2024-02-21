@@ -20,7 +20,6 @@ const OAuth = () => {
 
         try{
             const resultsFromGoogle = await signInWithPopup(auth, provider);
-            console.log(resultsFromGoogle);
             const res = await fetch('/backend/auth/google', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

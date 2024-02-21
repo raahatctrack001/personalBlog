@@ -1,11 +1,15 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Button, Navbar, TextInput } from 'flowbite-react'
+import { Avatar, Button, Dropdown, Navbar, TextInput } from 'flowbite-react'
 import { LuMailSearch } from "react-icons/lu";
 import { FiSearch } from "react-icons/fi";
 import { MdDarkMode } from "react-icons/md";
+import { useSelector } from 'react-redux';
+import { current } from '@reduxjs/toolkit';
 
 const Headers = () => {
+  const { currentUser } = useSelector(state=>state.user);
+  console.log(currentUser);
   const path = useLocation().pathname; //localhost:5172/projects; this path will give '/projects'
   return (
     <Navbar className='border-b-2 md:border-b-3 border-zinc-800'>
@@ -36,7 +40,30 @@ const Headers = () => {
           color='gray'>
           <MdDarkMode />
         </Button>
-        <Link to='/sign-in'>
+        { currentUser  ? 
+          (<Dropdown 
+            arrowIcon={false}          
+            inline
+            label={<Avatar alt='user' img={currentUser.profilePicture} rounded />}
+          >
+          <Dropdown.Header>
+            <span className='block text-sm'>@{currentUser.username}</span>
+            <span className='block text-sm font-medium truncate'>{currentUser.email}</span>
+          </Dropdown.Header>
+
+          <Link to='/dashboard?tab=profile'>
+            <Dropdown.Item>
+              Profile
+            </Dropdown.Item>
+          </Link>
+
+          <Dropdown.Divider />
+          
+          <Dropdown.Item >
+            Sign Out
+           </Dropdown.Item> 
+          </Dropdown>)  :
+          (<Link to='/sign-in'>
           <Button  
             outline        
             pill
@@ -45,7 +72,7 @@ const Headers = () => {
             color='gray'>
             Sign In
           </Button>
-        </Link>    
+        </Link>)}    
         <Navbar.Toggle />   
       </div>
       <Navbar.Collapse>

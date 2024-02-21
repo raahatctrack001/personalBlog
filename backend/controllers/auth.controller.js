@@ -4,6 +4,7 @@ import { errorHandler } from "../utils/error.js";
 import jwt from 'jsonwebtoken'
 
 const signup = async (req, res, next)=>{
+    
     const {username, email, password} = req.body;
     //handling edge cases
     if(!username || !email || !password || username === '' || email === '' || password === ''){
@@ -67,10 +68,9 @@ const signin = async (req, res, next)=>{
 
 }
 
-const google = async (req, res, next) => {
-   
-    
-    const { email, name, googlePhotoUrl } = req.body;
+const google = async (req, res, next) => {   
+  console.log(req.body);  
+  const { email, name, googlePhotoUrl } = req.body;
     try {
       const user = await User.findOne({ email });
       if (user) {
@@ -89,9 +89,12 @@ const google = async (req, res, next) => {
         const generatedPassword =
           Math.random().toString(36).slice(-8) +
           Math.random().toString(36).slice(-8);
+
         const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+        
         const generatedUsername = name.toLowerCase().split(' ').join('') +
         Math.random().toString(9).slice(-4);
+        
         const newUser = new User({
           username:generatedUsername,
           email,
