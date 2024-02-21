@@ -3,13 +3,15 @@ import { Link, useLocation } from 'react-router-dom'
 import { Avatar, Button, Dropdown, Navbar, TextInput } from 'flowbite-react'
 import { LuMailSearch } from "react-icons/lu";
 import { FiSearch } from "react-icons/fi";
-import { MdDarkMode } from "react-icons/md";
-import { useSelector } from 'react-redux';
-import { current } from '@reduxjs/toolkit';
+import { MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleTheme } from '../redux/theme/themeSlice';
+import { TbSunMoon } from "react-icons/tb";
 
 const Headers = () => {
-  const { currentUser } = useSelector(state=>state.user);
-  console.log(currentUser);
+  const theme = useSelector((state)=>state.theme);
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state)=>state.user);
   const path = useLocation().pathname; //localhost:5172/projects; this path will give '/projects'
   return (
     <Navbar className='border-b-2 md:border-b-3 border-zinc-800'>
@@ -32,14 +34,16 @@ const Headers = () => {
           className='sm:hidden bg-gray-200'
           pill>
           <FiSearch />
-        </Button> 
+      </Button> 
       <div className='flex gap-2 md:order-2'>     
         <Button
           className='hidden sm:inline'
           pill
-          color='gray'>
-          <MdDarkMode />
-        </Button>
+          color='gray'
+          onClick={()=>{dispatch(toggleTheme())}}
+          >
+          <TbSunMoon />
+          </Button>
         { currentUser  ? 
           (<Dropdown 
             arrowIcon={false}          
