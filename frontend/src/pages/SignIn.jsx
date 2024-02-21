@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { signInFailure, signInStart, signInSuccess } from '../redux/user/userSlice';
+import OAuth from '../components/OAuth';
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -79,7 +80,7 @@ const SignIn = () => {
             <TextInput 
               type='email'
               id='email'
-              placeholder='falana@dhimkana.com'
+              placeholder='name@company.com'
               className=''
               onChange={handleChange}
             />
@@ -100,6 +101,7 @@ const SignIn = () => {
                </div>
                ) : 'Sign in'}
             </Button>
+            <OAuth />
           </form>
           <div className='text-base mt-3 flex gap-2'>
             <p>Don't have an account?</p>
