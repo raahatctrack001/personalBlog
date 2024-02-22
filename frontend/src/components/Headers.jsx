@@ -3,13 +3,12 @@ import { Link, useLocation } from 'react-router-dom'
 import { Avatar, Button, Dropdown, Navbar, TextInput } from 'flowbite-react'
 import { LuMailSearch } from "react-icons/lu";
 import { FiSearch } from "react-icons/fi";
-import { MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
+import { MdOutlineLightMode, MdOutlineDarkMode } from "react-icons/md";
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleTheme } from '../redux/theme/themeSlice';
-import { TbSunMoon } from "react-icons/tb";
 
 const Headers = () => {
-  const theme = useSelector((state)=>state.theme);
+  const { theme } = useSelector((state)=>state.theme);
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state)=>state.user);
   const path = useLocation().pathname; //localhost:5172/projects; this path will give '/projects'
@@ -40,9 +39,9 @@ const Headers = () => {
           className='hidden sm:inline'
           pill
           color='gray'
-          onClick={()=>{dispatch(toggleTheme())}}
+          onClick={()=>dispatch(toggleTheme())}
           >
-          <TbSunMoon />
+          {theme === 'light' ? <MdOutlineDarkMode /> : <MdOutlineLightMode /> }
           </Button>
         { currentUser  ? 
           (<Dropdown 
