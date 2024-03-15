@@ -5,11 +5,10 @@ import userRoutes from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
+import app from './app.js';
 dotenv.config()
 
 const __dirname = path.resolve();
-
-const app = express();
 const port = process.env.PORT;
 
 app.use(express.json());
@@ -25,15 +24,17 @@ mongoose
 .catch((err)=>{
     console.log(err);
 });
-
+app.get('/falana', (req, res)=>{
+    res.status(200).json({
+        message: "api is working fine in index.js"
+    })
+})
 app.use('/backend/user', userRoutes);
 app.use('/backend/auth', authRoutes);
 
 app.use(express.static(path.join(__dirname, '/frontend/dist')));
 
-app.get('*', (req, res)=>{
-    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-})
+
 //middleware
 app.use((err, req, res, next) => {
     const statusCode = err.statuscode || 500;
